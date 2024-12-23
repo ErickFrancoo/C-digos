@@ -1,0 +1,67 @@
+#include "raylib.h"
+#include <stdio.h>
+
+#define LARGURA 800
+#define ALTURA 600
+
+int menu(void);
+
+int main() {
+
+    int funcao = 0;
+
+    InitWindow(LARGURA, ALTURA, "titulo");
+    SetTargetFPS(60);
+
+    while (!WindowShouldClose() && funcao != 3) {
+       funcao = menu();
+    }
+
+    CloseWindow();
+    return 0;
+}
+
+int menu(void) {
+    int enter = 0;
+    int x = 410, y = 460, z = 510, aux = x;
+
+    while (enter == 0) {
+        BeginDrawing();
+        ClearBackground(GRAY);
+
+        DrawText("Jetpack dos guri", 400, 300, 40, BLACK);
+        DrawText("Jogar", 400, 400, 30, BLACK);
+        DrawText("Leaderboard", 400, 450, 30, BLACK);
+        DrawText("Sair", 400, 500, 30, BLACK);
+        DrawCircle(350, aux, 8, BLACK);
+
+        if (IsKeyPressed(KEY_ENTER)) {
+            enter = 1;
+        }
+        if (IsKeyPressed(KEY_UP) && aux != x) {
+            if (aux == y) {
+                aux = x;
+            } else {
+                aux = y;
+            }
+        }
+        if (IsKeyPressed(KEY_DOWN) && aux != z) {
+            if (aux == x) {
+                aux = y;
+            } else {
+                aux = z;
+            }
+        }
+
+        EndDrawing();
+    }
+    if(aux == z) {
+        aux = 3;
+    }else if(aux == y){
+        aux = 2;
+    }else{
+        aux = 1;
+    }
+    printf("%d", aux);
+    return aux;
+}
